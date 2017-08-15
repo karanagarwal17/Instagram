@@ -4,6 +4,7 @@ var logger = require('logger');
 var path = require('path');
 var webpack = require('webpack');
 var webpackMiddleware = require('webpack-dev-middleware');
+var webpackHot = require('webpack-hot-middleware');
 
 var webpackConfig = require('./webpack.config');
 var index  = require('./routers/index');
@@ -12,6 +13,7 @@ var app = express();
 
 var compiler = webpack(webpackConfig);
 app.use(webpackMiddleware(compiler));
+app.use(webpackHot(compiler));
 
 app.set('views',path.join(__dirname,'views'));
 app.set('view engine','jade');
