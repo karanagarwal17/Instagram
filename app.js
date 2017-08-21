@@ -5,9 +5,15 @@ var path = require('path');
 var webpack = require('webpack');
 var webpackMiddleware = require('webpack-dev-middleware');
 var webpackHot = require('webpack-hot-middleware');
+var mongoose = require('mongoose');
 
 var webpackConfig = require('./webpack.config');
 var index  = require('./routers/index');
+var signup = require('./routers/signup');
+var config = require('./config/main');
+
+mongoose.connect(config.database);
+mongoose.Promise = global.Promise;
 
 var app = express();
 
@@ -23,7 +29,8 @@ app.set(express.static(path.join(__dirname,'public')));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-app.use('/',index);
+app.use('/',signup);
+app.use('/*',index);
 
 app.set('port', process.env.PORT || 3000);
 app.listen(app.get('port'), () => {
