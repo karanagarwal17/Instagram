@@ -1,14 +1,25 @@
 import React from "react";
 import { render } from "react-dom";
+import { Router, browserHistory } from 'react-router';
+import { Provider } from 'react-redux';
+import { applyMiddleware, createStore, compose } from 'redux';
+import thunk from 'redux-thunk';
+import jwt from 'jsonwebtoken';
+import routes from './routes/index';
+import style from './scss/style.scss';
+import rootReducers from './reducers/index';
+import { setCurrentUser } from './actions/signin';
 
-class App extends React.Component {
-  render() {
-    return (
-      <div>
-        <h1>Hello from react</h1>
-      </div>
-    );
-  }
-}
+let store = createStore(
+  rootReducers,
+  compose(
+    applyMiddleware(thunk),
+    window.devToolsExtension ? window.devToolsExtension() : f => f
+  )
+);
 
-render(<App />,document.getElementById('root'));
+render(
+  <Provider store={store}>
+    <Router history={ browserHistory } routes={ routes } />
+  </Provider>, document.getElementById("root")
+);
