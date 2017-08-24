@@ -8,7 +8,7 @@ import jwt from 'jsonwebtoken';
 import routes from './routes/index';
 import style from './scss/style.scss';
 import rootReducers from './reducers/index';
-import { setCurrentUser } from './actions/signin';
+// import { setCurrentUser } from './actions/signin';
 
 let store = createStore(
   rootReducers,
